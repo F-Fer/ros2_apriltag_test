@@ -1,0 +1,7 @@
+# Requirements for Mac host webcam sender
+# Install with: uv add -r requirements.txt
+
+opencv-python>=4.8.0
+pyzmq>=25.0.0
+numpy>=1.24.0
+pupil-apriltags>=1.0.0  # M1 Mac compatible fork of apriltag

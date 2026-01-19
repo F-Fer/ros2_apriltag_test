@@ -1,0 +1,22 @@
+# AprilTag Detector Parameters for AutonOHM atwork robot
+# RoboCup German Open
+
+apriltag_detector:
+  ros__parameters:
+    # Tag detection settings
+    tag_family: "tag36h11"  # Most common family
+    tag_size: 0.05          # Tag size in meters (5cm)
+    
+    # Camera settings
+    camera_frame: "camera_link"
+    
+webcam_receiver:
+  ros__parameters:
+    # ZMQ settings
+    zmq_port: 5555
+    
+    # Camera settings
+    frame_id: "camera_link"
+    image_width: 640
+    image_height: 480
+    fps: 30.0
