@@ -58,10 +58,22 @@ def generate_launch_description():
         }]
     )
     
+    # Web viewer node for browser-based visualization
+    web_viewer = Node(
+        package='apriltag_detector',
+        executable='web_viewer_node',
+        name='web_viewer',
+        output='screen',
+        parameters=[{
+            'port': 8080,
+        }]
+    )
+    
     return LaunchDescription([
         tag_family_arg,
         tag_size_arg,
         zmq_port_arg,
         webcam_receiver,
         apriltag_detector,
+        web_viewer,
     ])

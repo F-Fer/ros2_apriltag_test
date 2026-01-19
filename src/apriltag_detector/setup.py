@@ -27,6 +27,7 @@ setup(
             'apriltag_detector_node = apriltag_detector.apriltag_detector_node:main',
             'webcam_receiver_node = apriltag_detector.webcam_receiver_node:main',
             'visualization_node = apriltag_detector.visualization_node:main',
+            'web_viewer_node = apriltag_detector.web_viewer_node:main',
         ],
     },
 )

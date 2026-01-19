@@ -12,6 +12,7 @@ services:
       - ./src:/ros2_ws/src
     ports:
       - "5555:5555"  # For webcam frame streaming from Mac host
+      - "8080:8080"  # Web viewer for browser-based visualization
     stdin_open: true
     tty: true
     command: bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source install/setup.bash && ros2 launch apriltag_detector apriltag_demo.launch.py"
