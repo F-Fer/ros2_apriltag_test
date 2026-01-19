@@ -1,5 +1,4 @@
-# AprilTag Detector Parameters for AutonOHM atwork robot
-# RoboCup German Open
+# AprilTag Detector 
 
 apriltag_detector:
   ros__parameters:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Webcam Receiver Node for AutonOHM atwork robot
+Webcam Receiver Node
 Receives webcam frames via ZMQ from Mac host and publishes as ROS 2 images.
 
 This node is needed because Docker cannot directly access Mac webcam.

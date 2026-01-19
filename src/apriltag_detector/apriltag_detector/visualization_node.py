@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Visualization Node for AutonOHM atwork robot
+Visualization Node
 Displays AprilTag detections in a window.
 
 This node can be run either inside Docker (with X11 forwarding) or natively.

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-AprilTag Detector Node for AutonOHM atwork robot
-RoboCup German Open
+AprilTag Detector Node
 
 Subscribes to camera images, detects AprilTags, and publishes:
 - Tag detections with pose estimates
