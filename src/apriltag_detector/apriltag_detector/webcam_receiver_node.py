@@ -37,9 +37,9 @@ class WebcamReceiverNode(Node):
         # CV Bridge
         self.bridge = CvBridge()
         
-        # ZMQ setup
-        self.context = zmq.Context()
-        self.socket = self.context.socket(zmq.PULL)
+        # ZMQ setup (use zmq_context to avoid conflict with ROS Node.context)
+        self.zmq_context = zmq.Context()
+        self.socket = self.zmq_context.socket(zmq.PULL)
         self.socket.bind(f"tcp://*:{zmq_port}")
         self.socket.setsockopt(zmq.RCVTIMEO, 100)  # 100ms timeout
         
@@ -120,7 +120,7 @@ class WebcamReceiverNode(Node):
     def destroy_node(self):
         """Clean up ZMQ resources."""
         self.socket.close()
-        self.context.term()
+        self.zmq_context.term()
         super().destroy_node()
 
 
