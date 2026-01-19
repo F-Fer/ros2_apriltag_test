@@ -416,7 +416,7 @@ class AprilTagDemo:
             # Print stats
             elapsed = time.time() - self.start_time
             print(f"\n{'='*50}")
-            print(f"Session Statistics:")
+            print("Session Statistics:")
             print(f"  Runtime: {elapsed:.1f}s")
             print(f"  Frames processed: {self.frame_count}")
             print(f"  Total detections: {self.detection_count}")

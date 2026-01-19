@@ -14,7 +14,6 @@ from cv_bridge import CvBridge
 import numpy as np
 import zmq
 import cv2
-import struct
 
 
 class WebcamReceiverNode(Node):
@@ -52,8 +51,8 @@ class WebcamReceiverNode(Node):
         self.timer = self.create_timer(timer_period, self.timer_callback)
         
         self.get_logger().info(f'Webcam Receiver initialized on port {zmq_port}')
-        self.get_logger().info(f'Waiting for frames from webcam_sender.py...')
-        self.get_logger().info(f'Run: python3 webcam_sender.py on Mac host')
+        self.get_logger().info('Waiting for frames from webcam_sender.py...')
+        self.get_logger().info('Run: python3 webcam_sender.py on Mac host')
     
     def timer_callback(self):
         """Poll for new frames from ZMQ."""

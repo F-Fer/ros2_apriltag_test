@@ -35,16 +35,16 @@ def main():
     socket.connect(f"tcp://localhost:{args.port}")
     socket.setsockopt(zmq.SNDHWM, 2)  # Only buffer 2 frames
     
-    print(f"╔══════════════════════════════════════════════════════════════╗")
-    print(f"║        AutonOHM AprilTag Detector - Webcam Sender            ║")
-    print(f"║                  RoboCup German Open                         ║")
-    print(f"╠══════════════════════════════════════════════════════════════╣")
-    print(f"║  Connecting to: tcp://localhost:{args.port:<25}         ║")
-    print(f"║  Camera: {args.camera}  Resolution: {args.width}x{args.height}  FPS: {args.fps:<14}  ║")
-    print(f"║                                                              ║")
-    print(f"║  Press 'q' to quit (if preview enabled)                      ║")
-    print(f"║  Press Ctrl+C to stop                                        ║")
-    print(f"╚══════════════════════════════════════════════════════════════╝")
+    print("╔══════════════════════════════════════════════════════════════╗")
+    print("║        AutonOHM AprilTag Detector - Webcam Sender            ║")
+    print("║                  RoboCup German Open                         ║")
+    print("╠══════════════════════════════════════════════════════════════╣")
+    print(f"║  Connecting to: tcp://localhost:{args.port:<25}    ║")
+    print(f"║  Camera: {args.camera}  Resolution: {args.width}x{args.height}  FPS: {args.fps:<14}         ║")
+    print("║                                                              ║")
+    print("║  Press 'q' to quit (if preview enabled)                      ║")
+    print("║  Press Ctrl+C to stop                                        ║")
+    print("╚══════════════════════════════════════════════════════════════╝")
     
     # Open camera
     cap = cv2.VideoCapture(args.camera)
@@ -57,9 +57,9 @@ def main():
         print("Make sure you've granted camera permissions in System Preferences.")
         return
     
-    print(f"\n✓ Camera opened successfully!")
+    print("\n✓ Camera opened successfully!")
     print(f"  Actual resolution: {int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))}x{int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))}")
-    print(f"\nSending frames... (Ctrl+C to stop)\n")
+    print("\nSending frames... (Ctrl+C to stop)\n")
     
     frame_count = 0
     start_time = time.time()
@@ -87,7 +87,7 @@ def main():
             
             # Show preview if requested
             if args.show:
-                cv2.putText(frame, f"Sending to ROS 2...", (10, 30),
+                cv2.putText(frame, "Sending to ROS 2...", (10, 30),
                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
                 cv2.imshow("Webcam Sender Preview", frame)
                 if cv2.waitKey(1) & 0xFF == ord('q'):

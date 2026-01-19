@@ -11,8 +11,7 @@ Subscribes to camera images, detects AprilTags, and publishes:
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image, CameraInfo
-from geometry_msgs.msg import PoseArray, Pose, TransformStamped
-from std_msgs.msg import Header
+from geometry_msgs.msg import PoseArray, Pose
 from vision_msgs.msg import Detection2DArray, Detection2D, ObjectHypothesisWithPose
 from cv_bridge import CvBridge
 import cv2
@@ -90,10 +89,10 @@ class AprilTagDetectorNode(Node):
             10
         )
         
-        self.get_logger().info(f'AprilTag Detector initialized')
+        self.get_logger().info('AprilTag Detector initialized')
         self.get_logger().info(f'  Tag family: {tag_family}')
         self.get_logger().info(f'  Tag size: {self.tag_size}m')
-        self.get_logger().info(f'  Waiting for images on /camera/image_raw...')
+        self.get_logger().info('  Waiting for images on /camera/image_raw...')
     
     def camera_info_callback(self, msg: CameraInfo):
         """Update camera intrinsics from camera_info topic."""
@@ -216,7 +215,7 @@ class AprilTagDetectorNode(Node):
                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
         
         # Draw axes if pose available
-        corners_float = detection.corners.reshape(4, 2)
+        # corners_float = detection.corners.reshape(4, 2)
         
         # Draw corner numbers for debugging
         for i, corner in enumerate(corners):
