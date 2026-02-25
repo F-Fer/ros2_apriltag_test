@@ -129,13 +129,16 @@ class WebViewerNode(Node):
         
         self.declare_parameter('port', 8080)
         port = self.get_parameter('port').value
-        
+
+        self.declare_parameter('image_topic', '/apriltag/image_annotated')
+        image_topic = self.get_parameter('image_topic').value
+
         self.bridge = CvBridge()
-        
+
         # Subscribe to annotated images
         self.subscription = self.create_subscription(
             Image,
-            '/apriltag/image_annotated',
+            image_topic,
             self.image_callback,
             10
         )

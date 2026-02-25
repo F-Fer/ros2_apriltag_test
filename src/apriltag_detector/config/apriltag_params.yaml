@@ -13,9 +13,39 @@ webcam_receiver:
   ros__parameters:
     # ZMQ settings
     zmq_port: 5555
-    
+
     # Camera settings
     frame_id: "camera_link"
     image_width: 640
     image_height: 480
     fps: 30.0
+
+lego_detector:
+  ros__parameters:
+    color_names: ["red", "blue", "yellow", "green"]
+    min_contour_area: 500          # px² — tune per camera distance
+    camera_frame: "camera_color_optical_frame"
+    sync_slop: 0.05                # seconds
+    sync_queue_size: 5
+
+    # HSV values: H 0–180, S/V 0–255 (OpenCV convention)
+    # Tune per arena lighting conditions.
+    red.hsv_lower:  [0,   120,  70]
+    red.hsv_upper:  [10,  255, 255]
+    red.hsv_lower2: [170, 120,  70]   # hue wrap-around for red
+    red.hsv_upper2: [180, 255, 255]
+
+    blue.hsv_lower:  [100, 120,  70]
+    blue.hsv_upper:  [130, 255, 255]
+    blue.hsv_lower2: []
+    blue.hsv_upper2: []
+
+    yellow.hsv_lower:  [20,  100, 100]
+    yellow.hsv_upper:  [35,  255, 255]
+    yellow.hsv_lower2: []
+    yellow.hsv_upper2: []
+
+    green.hsv_lower:  [40,  70,  70]
+    green.hsv_upper:  [85, 255, 255]
+    green.hsv_lower2: []
+    green.hsv_upper2: []

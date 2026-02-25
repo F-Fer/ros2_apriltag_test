@@ -19,14 +19,17 @@ class VisualizationNode(Node):
         
         self.declare_parameter('window_name', 'AutonOHM AprilTag Detector')
         self.window_name = self.get_parameter('window_name').value
-        
+
+        self.declare_parameter('image_topic', '/apriltag/image_annotated')
+        image_topic = self.get_parameter('image_topic').value
+
         self.bridge = CvBridge()
         self.latest_image = None
-        
+
         # Subscriber
         self.image_sub = self.create_subscription(
             Image,
-            '/apriltag/image_annotated',
+            image_topic,
             self.image_callback,
             10
         )
