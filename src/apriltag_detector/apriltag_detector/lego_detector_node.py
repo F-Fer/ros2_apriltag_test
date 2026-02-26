@@ -19,7 +19,6 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image, CameraInfo
 from geometry_msgs.msg import PoseArray, Pose
 from cv_bridge import CvBridge
-from rcl_interfaces.msg import ParameterDescriptor, ParameterType
 import message_filters
 import cv2
 import numpy as np
@@ -57,22 +56,25 @@ class LegoDetectorNode(Node):
         # Load per-color HSV configs
         self.color_configs = {}
         for color in color_names:
-            int_array = ParameterDescriptor(type=ParameterType.PARAMETER_INTEGER_ARRAY)
+            # Defaults are valid integer arrays so rclpy infers INTEGER_ARRAY type.
+            # [0,0,0] for upper2 is the sentinel meaning "no second range".
             self.declare_parameter(f'{color}.hsv_lower',  [0,   0,   0])
             self.declare_parameter(f'{color}.hsv_upper',  [180, 255, 255])
-            self.declare_parameter(f'{color}.hsv_lower2', [], int_array)
-            self.declare_parameter(f'{color}.hsv_upper2', [], int_array)
+            self.declare_parameter(f'{color}.hsv_lower2', [0,   0,   0])
+            self.declare_parameter(f'{color}.hsv_upper2', [0,   0,   0])
 
             lower  = list(self.get_parameter(f'{color}.hsv_lower').value)
             upper  = list(self.get_parameter(f'{color}.hsv_upper').value)
             lower2 = list(self.get_parameter(f'{color}.hsv_lower2').value)
             upper2 = list(self.get_parameter(f'{color}.hsv_upper2').value)
 
+            # Use second range only when upper2 has nonzero values (not the sentinel)
+            has_second = any(v > 0 for v in upper2)
             self.color_configs[color] = {
                 'hsv_lower':  np.array(lower,  dtype=np.uint8),
                 'hsv_upper':  np.array(upper,  dtype=np.uint8),
-                'hsv_lower2': np.array(lower2, dtype=np.uint8) if lower2 else None,
-                'hsv_upper2': np.array(upper2, dtype=np.uint8) if upper2 else None,
+                'hsv_lower2': np.array(lower2, dtype=np.uint8) if has_second else None,
+                'hsv_upper2': np.array(upper2, dtype=np.uint8) if has_second else None,
             }
 
         # --- State ---

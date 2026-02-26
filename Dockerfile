@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-cv-bridge \
     ros-jazzy-image-transport \
     ros-jazzy-vision-msgs \
+    ros-jazzy-realsense2-camera \
+    ros-jazzy-realsense2-description \
     libopencv-dev \
     git \
     && rm -rf /var/lib/apt/lists/*

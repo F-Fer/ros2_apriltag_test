@@ -37,15 +37,9 @@ lego_detector:
 
     blue.hsv_lower:  [100, 120,  70]
     blue.hsv_upper:  [130, 255, 255]
-    blue.hsv_lower2: []
-    blue.hsv_upper2: []
 
     yellow.hsv_lower:  [20,  100, 100]
     yellow.hsv_upper:  [35,  255, 255]
-    yellow.hsv_lower2: []
-    yellow.hsv_upper2: []
 
     green.hsv_lower:  [40,  70,  70]
     green.hsv_upper:  [85, 255, 255]
-    green.hsv_lower2: []
-    green.hsv_upper2: []
