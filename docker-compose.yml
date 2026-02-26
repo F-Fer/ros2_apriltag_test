@@ -12,6 +12,7 @@ services:
       - ./src:/ros2_ws/src
     ports:
       - "5555:5555"  # For webcam frame streaming from Mac host
+      - "5556:5556"  # For RealSense D435 color + depth streaming from Mac host
       - "8080:8080"  # Web viewer for browser-based visualization
     privileged: true
     stdin_open: true

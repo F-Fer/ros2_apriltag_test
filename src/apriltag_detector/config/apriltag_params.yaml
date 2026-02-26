@@ -20,6 +20,12 @@ webcam_receiver:
     image_height: 480
     fps: 30.0
 
+realsense_receiver:
+  ros__parameters:
+    zmq_port: 5556
+    frame_id: "camera_color_optical_frame"
+    fps: 30.0
+
 lego_detector:
   ros__parameters:
     color_names: ["red", "blue", "yellow", "green"]

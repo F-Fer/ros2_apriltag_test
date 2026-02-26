@@ -3,8 +3,8 @@
 Launch file for AutonOHM Lego Duplo Detection Demo
 RoboCup @Work — RealSense D435 on robot arm end-effector.
 
-NOTE: Start the RealSense driver separately:
-  ros2 launch realsense2_camera rs_launch.py align_depth.enable:=true
+Run on Mac host first:
+  python3 realsense_sender.py
 """
 
 import os
@@ -23,6 +23,14 @@ def generate_launch_description():
         allow_substs=True
     )
 
+    realsense_receiver = Node(
+        package='apriltag_detector',
+        executable='realsense_receiver_node',
+        name='realsense_receiver',
+        output='screen',
+        parameters=[params_file],
+    )
+
     lego_detector = Node(
         package='apriltag_detector',
         executable='lego_detector_node',
@@ -37,12 +45,13 @@ def generate_launch_description():
         name='web_viewer',
         output='screen',
         parameters=[{
-            'port': 8888,
+            'port': 8080,
             'image_topic': '/lego/image_annotated',
         }],
     )
 
     return LaunchDescription([
+        realsense_receiver,
         lego_detector,
         web_viewer,
     ])

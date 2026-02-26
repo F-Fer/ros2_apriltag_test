@@ -29,6 +29,7 @@ setup(
             'visualization_node = apriltag_detector.visualization_node:main',
             'web_viewer_node = apriltag_detector.web_viewer_node:main',
             'lego_detector_node = apriltag_detector.lego_detector_node:main',
+            'realsense_receiver_node = apriltag_detector.realsense_receiver_node:main',
         ],
     },
 )
