@@ -88,6 +88,36 @@ Browser: http://localhost:8080
 | `/lego/image_annotated` | `sensor_msgs/Image` | Annotated color feed |
 | `/apriltag/detections` | `vision_msgs/Detection2DArray` | 2D tag detections |
 | `/apriltag/poses` | `geometry_msgs/PoseArray` | 3D tag poses |
+| `/apriltag/image_annotated` | `sensor_msgs/Image` | Color image with drawn tag outlines, IDs and corner indices |
+
+---
+
+## TF Frames (Added for Robot Arm Integration)
+
+The `apriltag_detector_node` now additionally broadcasts a **TF transform** for every detected tag.
+This enables any downstream ROS 2 node (e.g. a robot arm controller) to query the tag's 3D position
+directly from the TF tree without subscribing to `/apriltag/poses` manually.
+
+| Child Frame | Parent Frame | Published by |
+|-------------|--------------|--------------|
+| `tag_<ID>` (e.g. `tag_3`) | `camera_frame` parameter (default: `camera_link`) | `apriltag_detector_node` |
+
+### Usage example
+
+```bash
+# Check that the transform is being broadcast:
+ros2 run tf2_ros tf2_echo camera_link tag_3
+
+# In Python (inside a ROS 2 node):
+t = self.tf_buffer.lookup_transform('base_link', 'tag_3', rclpy.time.Time())
+```
+
+> **Note:** The `camera_frame` parameter should match the frame published by your camera driver.
+> For Intel RealSense cameras set it to `camera_color_optical_frame` so the Z-axis points
+> through the lens (away from the camera), which is the convention expected by the detector.
+> ```python
+> parameters=[{'camera_frame': 'camera_color_optical_frame'}]
+> ```
 
 ---
 
@@ -95,4 +125,5 @@ Browser: http://localhost:8080
 
 Edit `src/apriltag_detector/config/apriltag_params.yaml` under `lego_detector.ros__parameters`.
 H: 0–180, S/V: 0–255 (OpenCV convention). No rebuild needed — restart the launch.
+
 
