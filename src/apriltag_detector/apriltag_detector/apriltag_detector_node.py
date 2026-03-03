@@ -10,12 +10,16 @@ Subscribes to camera images, detects AprilTags, and publishes:
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image, CameraInfo
-from geometry_msgs.msg import PoseArray, Pose
+from geometry_msgs.msg import PoseArray, Pose, TransformStamped # ADDED TransformStamped for TF Support
 from vision_msgs.msg import Detection2DArray, Detection2D, ObjectHypothesisWithPose
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
 from pupil_apriltags import Detector
+
+# --- ADDED FOR TF SUPPORT ---
+import tf2_ros
+# ----------------------------
 
 
 class AprilTagDetectorNode(Node):
@@ -87,6 +91,11 @@ class AprilTagDetectorNode(Node):
             '/apriltag/image_annotated',
             10
         )
+        
+        # --- ADDED FOR TF SUPPORT ---
+        # Initialize the transform broadcaster so downstream nodes can track the tags
+        self.tf_broadcaster = tf2_ros.TransformBroadcaster(self)
+        # ----------------------------
         
         self.get_logger().info('AprilTag Detector initialized')
         self.get_logger().info(f'  Tag family: {tag_family}')
@@ -166,6 +175,25 @@ class AprilTagDetectorNode(Node):
                 if pose is not None:
                     hypothesis.pose.pose = pose
                     pose_array.poses.append(pose)
+                    
+                    # --- ADDED FOR TF SUPPORT ---
+                    # Broadcast the pose as a TF frame so robot arms/navigation can use it
+                    t = TransformStamped()
+                    t.header.stamp = msg.header.stamp
+                    t.header.frame_id = self.camera_frame
+                    t.child_frame_id = f'tag_{detection.tag_id}'
+                    
+                    t.transform.translation.x = pose.position.x
+                    t.transform.translation.y = pose.position.y
+                    t.transform.translation.z = pose.position.z
+                    
+                    t.transform.rotation.x = pose.orientation.x
+                    t.transform.rotation.y = pose.orientation.y
+                    t.transform.rotation.z = pose.orientation.z
+                    t.transform.rotation.w = pose.orientation.w
+                    
+                    self.tf_broadcaster.sendTransform(t)
+                    # ----------------------------
                 
                 det_msg.results.append(hypothesis)
                 detection_array.detections.append(det_msg)
