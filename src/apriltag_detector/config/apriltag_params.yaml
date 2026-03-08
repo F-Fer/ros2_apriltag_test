@@ -4,7 +4,7 @@ apriltag_detector:
   ros__parameters:
     # Tag detection settings
     tag_family: "tag36h11"  # Most common family
-    tag_size: 0.05          # Tag size in meters (5cm)
+    tag_size: 0.032         # Tag size in meters
     
     # Camera settings
     camera_frame: "camera_link"
